@@ -8,7 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 <?php include 'head.php'; 
-$rootPage = 'UserGroup';
+$rootPage = 'User';
 
 //Check user roll.
 switch($s_userGroupCode){
@@ -20,15 +20,17 @@ switch($s_userGroupCode){
 }
 $Id=$_GET['Id'];
 
-$sql = "SELECT hdr.`Id`, hdr.`Code`, hdr.`Name`, hdr.`StatusId`
+$sql = "SELECT hdr.`userId`, hdr.`userName`, hdr.`userPassword`, hdr.`userPin`, hdr.`userFullname`
+, hdr.`userGroupCode`, hdr.`userDeptCode`, hdr.`userEmail`, hdr.`userTel`
+, hdr.`userPicture`, hdr.`statusCode`
 , hdr.`CreateTime`, hdr.`CreateUserId`, hdr.`UpdateTime`, hdr.`UpdateUserId`
+
 , uc.userFullname as CreateUserName 
 , uu.userFullname as UpdateUserName 
-FROM `cr_user_group` hdr 
+FROM `cr_user` hdr 
 LEFT JOIN `cr_user` uc on uc.userId=hdr.CreateUserId 
 LEFT JOIN `cr_user` uu on uu.userId=hdr.UpdateUserId 
-WHERE 1=1 
-AND hdr.Id=:Id 
+WHERE hdr.userId=:Id 
 LIMIT 1  
 ";		
 //$result = mysqli_query($link, $sql);
@@ -76,6 +78,86 @@ $row=$stmt->fetch();
         </div><!-- /.box-header -->
         <div class="box-body">                
 	        <form id="form1" method="post" class="form" validate>
+				<div class="row"> 
+					<input type="hidden" name="action" value="edit" />
+					<input id="Id" type="hidden" name="Id" value="<?=$row['Id'];?>" />	
+					
+					<input type="hidden" name="action" value="add" />
+					<div class="row col-md-6">					
+						<div class="form-group col-md-6">
+							<label for="userName">Username</label>
+							<input id="userName" type="text" class="form-control" name="userName" value="<?=$row['userName'];?>"  data-smk-msg="Require userName" required>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="userPassword">User Password</label>
+							<input id="userPassword" type="text" class="form-control" name="userPassword" value="<?=$row['userName'];?>"  data-smk-msg= "Require userPassword" required>
+						</div>
+
+						<div class="form-group col-md-12">
+							<label for="userFullname">User Fullname</label>
+							<input id="userFullname" type="text" class="form-control" name="userFullname" value="<?=$row['userName'];?>"  data-smk-msg="Require userFullname."required>
+						</div>                     
+						
+						<div class="form-group col-md-6">
+							<label for="userEmail">User Email</label>
+							<input id="userEmail" type="email" class="form-control" name="userEmail" value="<?=$row['userName'];?>"  data-smk-msg="Require userEmail" required>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="userTel">User Telephone</label>
+							<input id="userTel" type="text" class="form-control" name="userTel" value="<?=$row['userName'];?>"  data-smk-msg="Require Telephone number" required>                        
+						</div>
+						
+						
+						<div class="form-group col-md-6">
+							<label for="userPin">User PIN</label>
+							<input id="userPin" type="text" class="form-control" name="userPin" data-smk-msg= "Require userPin" required>
+						</div>
+					</div>
+					<!--/.col-md-->
+					<div class="row col-md-6">
+						<div class="form-group col-md-6">
+							<label for="userGroupCode">User Group</label>
+							<select id="userGroupCode" name="userGroupCode" class="form-control"  data-smk-msg="Require User Group" required>
+								<?php
+								$sql = "SELECT `Id`, `Code`, `Name`, `StatusId`  FROM `cr_user_group` WHERE StatusId=1 ";							
+								$stmt = $pdo->prepare($sql);		
+								$stmt->execute();
+								while($row = $stmt->fetch()){									
+									$selected = ($rOption['Id']==$row['userGroupCode']?' selected ':'');	
+									echo '<option value="'.$row['Id'].'" 
+										 >'.$row['Id'].' : ['.$row['Name'].']</option>';
+								}
+								?>
+							</select>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="userGroupDept">User Department</label>
+							<select id="userGroupDept" name="userGroupDept" class="form-control"  data-smk-msg="Require User Department" required>
+								<option value="0"> -- All -- </option>
+							</select>
+						</div>							
+						<div class="form-group col-md-6">
+							<label for="inputFile">User Image</label>
+							<input type="hidden" name="curPhoto" id="curPhoto" value="<?=$row['photo'];?>" />
+							<input type="file" name="inputFile" accept="image/*" multiple  onchange="showMyImage(this)" /> <br/>
+							<img id="thumbnil" style="width:50%; margin-top:10px;"  src="dist/img/<?php echo (empty($row['photo'])? 'default.jpg' : $row['photo']); ?>" alt="" />
+						</div>
+					</div>
+					<!--/.col-md-->
+				</div>
+				<!--/.row-->   
+				
+				<div class="row">
+					<div class="col-md-6">    
+					<button id="btnSubmit" type="submit" class="btn btn-defalut">Submit</button>
+					</div>
+				</div>
+				<!--/.row--> 
+				
+				
+				
+				
+				
 	        <div class="row"> 
 				<input type="hidden" name="action" value="edit" />
 				<input id="Id" type="hidden" name="Id" value="<?=$row['Id'];?>" />	

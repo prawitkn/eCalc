@@ -6,12 +6,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 <?php include 'head.php'; 
-$rootPage = 'UserGroup';
-$tb = 'cr_user_group';
-
+$rootPage = 'user';
 //Check user roll.
 switch($s_userGroupCode){
-	case 1 :
+	case 'admin' : 
 		break;
 	default : 
 		header('Location: access_denied.php');
@@ -34,12 +32,12 @@ switch($s_userGroupCode){
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
 	<section class="content-header">
-		<h1><i class="fa fa-users"></i>
-       User Group
-        <small>User group management</small>
+		<h1><i class="glyphicon glyphicon-user"></i>
+       Users
+        <small>User management</small>
       </h1>
-	  <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-list"></i>User Group List</a></li>
+      <ol class="breadcrumb">
+        <li><a href="<?=$rootPage;?>.php"><i class="glyphicon glyphicon-list"></i>User List</a></li>
       </ol>
     </section>
 
@@ -49,26 +47,26 @@ switch($s_userGroupCode){
 <!-- To allow only admin to access the content -->      
     <div class="box box-primary">
         <div class="box-header with-border">
-        	<label class="box-tittle" style="font-size: 20px;"><i class="fa fa-list"></i> User group list</label>
-
-			<a href="<?=$rootPage;?>Add.php?id=" class="btn btn-primary"><i class="fa fa-plus"></i> Add user group</a>
+		<label class="lb-lg">User List</label> 
+			<a href="<?=$rootPage;?>_add.php?userID=" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Add User</a>
 		
 		
         <div class="box-tools pull-right">
           <!-- Buttons, labels, and many other things can be placed here! -->
           <!-- Here is a label for example -->
           <?php
-                //$sql_user = "SELECT COUNT(*) AS COUNTUSER FROM wh_user";
+                //$sql_user = "SELECT COUNT(*) AS COUNTUSER FROM cr_user";
                // $result_user = mysqli_query($link, $sql_user);
                // $count_user = mysqli_fetch_assoc($result_user);
 				
 				$search_word="";
                 $sql = "
 				SELECT COUNT(*) AS countTotal 
-				FROM `cr_user_group` hdr  ";
+				FROM `cr_user` hdr 
+				LEFT JOIN cr_user_group ug on ug.code=hdr.userGroupCode  ";
 				if(isset($_GET['search_word']) and isset($_GET['search_word'])){
 					$search_word=$_GET['search_word'];
-					$sql .= "and (hdr.name like '%".$_GET['search_word']."%' ) ";
+					$sql .= "and (hdr.userFullname like '%".$_GET['search_word']."%' ) ";
 				}			
                 $result = mysqli_query($link, $sql);
                 $countTotal = mysqli_fetch_assoc($result);
@@ -81,50 +79,42 @@ switch($s_userGroupCode){
 				$total_page=ceil($total_data/$rows);
 				if($page>=$total_page) $page=$total_page;
 				$start=($page-1)*$rows;
-				if($start<0) $start=0;		
           ?>
           <span class="label label-primary">Total <?php echo $countTotal['countTotal']; ?> items</span>
         </div><!-- /.box-tools -->
         </div><!-- /.box-header -->
         <div class="box-body">
-				<form id="form1" action="<?=$rootPage;?>.php" method="get" class="form form-inline" novalidate>
-				
-					<div class="row">
-							<div class="col-md-3">					
-								<label for="search_word">search key word.</label>
-								<input id="search_word" type="text" name="search_word" class="form-control" data-smk-msg="Require userFullname."required>
-								
-								
-							</div>  
-							<!--/.col-md-->
-							
-							<div class="col-md-1">
-								<label for="submit">&nbsp;</label>
-								<input type="submit" name="submit" class="btn btn-default" value="ค้นหา">
-							</div>  
-							<!--/.col-md-->
-					</div>
-					<!--/.row-->
-			
-			
-				</form>
-				<!--/.form1-->
-			
+			<div class="row">
+				<div class="col-md-6">					
+					<form id="form1" action="<?=$rootPage;?>.php" method="get" class="form" novalidate>
+						<div class="form-group">
+							<label for="search_word">User Fullname search key word.</label>
+							<div class="input-group">
+								<input id="search_word" type="text" class="form-control" name="search_word" data-smk-msg="Require userFullname."required>
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-search"></span>
+								</span>
+							</div>
+						</div>						
+						<input type="submit" class="btn btn-default" value="ค้นหา">
+					</form>
+				</div>  
+				<!--/.col-md-->
+			</div>
+			<!--/.row-->
            <?php
 				$sql = "
-				SELECT hdr.`Id`, hdr.`Code`, hdr.`Name`, hdr.`StatusId`
-				, hdr.`CreateTime`, hdr.`CreateUserId`, hdr.`UpdateTime`, hdr.`UpdateUserId`
-				, uc.userFullname as CreateUserName 
-				, uu.userFullname as UpdateUserName 
-				FROM `cr_user_group` hdr 
-				LEFT JOIN `cr_user` uc on uc.userId=hdr.CreateUserId 
-				LEFT JOIN `cr_user` uu on uu.userId=hdr.UpdateUserId 
+				SELECT hdr.`userID` as id, hdr.`userName`, hdr.`userPassword`, hdr.`userFullname`, hdr.`userGroupCode`
+				, hdr.`userDeptCode`, hdr.`userEmail`, hdr.`userTel`, hdr.`userPicture`, hdr.`statusCode` 
+				, ug.`name` as userGroupName 
+				FROM `cr_user` hdr 
+				LEFT JOIN cr_user_group ug on ug.code=hdr.userGroupCode  
 				WHERE 1=1 ";
 				if(isset($_GET['search_word']) and isset($_GET['search_word'])){
 					$search_word=$_GET['search_word'];
 					$sql .= "and (hdr.userFullname like '%".$_GET['search_word']."%' ) ";
 				}	
-				$sql .= "ORDER BY hdr.id ASC
+				$sql .= "ORDER BY hdr.userID ASC
 						LIMIT $start, $rows 
 				";		
                 //$result = mysqli_query($link, $sql);
@@ -132,42 +122,51 @@ switch($s_userGroupCode){
 				$stmt->execute();	
                 
            ?> 
-            <div class="row col-md-12 table-responsive">
-            <table class="table table-hover">
-                <thead><tr style="background-color: #797979;">
-					<th>No.</th>
-                    <th>ID</th>
-					<th>Code</th>
-					<th>Name</th>
+            <div class="table-responsive">
+            <table class="table table-striped">
+                <tr>
+					<th>No.</th>					
+                    <th>Picture</th>
+                    <th>UserName</th>					
+                    <th>Full Name</th>
+					<th>Group</th>
                     <th>Status</th>
                     <th>#</th>
-                    <th></th>
-                </tr></thead>
+                </tr>
                 <?php $c_row=($start+1); while ($row = $stmt->fetch()) { 
+					$statusName = '<label class="label label-info">Unknow</label>';
+						switch($row['statusCode']){
+							case 'A' : $statusName = '<label class="label label-success">Active</label>'; break;
+							case 'X' : $statusName = '<label class="label label-danger">Inactive</label>'; break;
+							default : 						
+						}
 						?>
                 <tr>
 					<td>
                          <?= $c_row; ?>
+                    </td>	
+                    <td>
+                         <img class="img-circle" src="./dist/img/<?php echo (empty($row['userPicture'])? 'default-50x50.gif' : $row['userPicture']) ?> " width="32px" height="32px" >
+                    </td>	
+                    <td>
+                         <?= $row['userName']; ?>
                     </td>
                     <td>
-                         <?= $row['Id']; ?>
-                    </td>					
+                         <?= $row['userFullname']; ?>
+                    </td>				
                     <td>
-                         <?= $row['Code']; ?>
-                    </td>
-                    <td>
-                         <?= $row['Name']; ?>
+                         <?= $row['userGroupName']; ?>
                     </td>
                     <td>
 						 <?php
-						 switch($row['StatusId']){ 	
-							case 1 :
-								echo '<a class="btn btn-success" name="btn_row_setActive" data-statusId="2" data-Id="'.$row['Id'].'" >Active</a>';
+						 switch($row['statusCode']){ 	
+							case 'A' :
+								echo '<a class="btn btn-success" name="btn_row_setActive" data-statusCode="I" data-id="'.$row['id'].'" >Active</a>';
 								break;
-							case 2 :
-								echo '<a class="btn btn-default" name="btn_row_setActive" data-statusId="1" data-Id="'.$row['Id'].'" >Inactive</a>';
+							case 'I' :
+								echo '<a class="btn btn-default" name="btn_row_setActive" data-statusCode="A" data-id="'.$row['id'].'" >Inactive</a>';
 								break;
-							case 3 : 
+							case 'X' : 
 								echo '<label style="color: red;" >Removed</label>';
 								break;
 							default :	
@@ -177,30 +176,31 @@ switch($s_userGroupCode){
                     </td>					
                     <td>
 						
-						<?php if($row['StatusId']==1){ ?>
-							<a class="btn btn-primary" name="btn_row_edit" href="<?=$rootPage;?>Edit.php?act=edit&Id=<?= $row['Id']; ?>" >
-								<i class="fa fa-edit"></i> Edit</a>	
+						<?php if($row['statusCode']=='A' OR ($s_userGroupCode=='it' OR $s_userGroupCode=='prog')){ ?>
+							<a class="btn btn-primary" name="btn_row_edit" href="<?=$rootPage;?>_edit.php?act=edit&id=<?= $row['id']; ?>" >
+								<i class="glyphicon glyphicon-edit"></i> Edit</a>	
 						<?php }else{ ?>	
 							<a class="btn btn-primary"  disabled  > 
-								<i class="fa fa-edit"></i> Edit</a>	
+								<i class="glyphicon glyphicon-edit"></i> Edit</a>	
 						<?php } ?>
 						
-						<?php if($row['StatusId']==2){ ?>
-							<a class="btn btn-danger" name="btn_row_remove"  data-Id="<?=$row['Id'];?>" > 
-								<i class="fa fa-remove"></i> Remove</a>	
+						<?php if($row['statusCode']=='I'){ ?>
+							<a class="btn btn-danger" name="btn_row_remove"  data-id="<?=$row['id'];?>" > 
+								<i class="glyphicon glyphicon-remove"></i> Remove</a>	
 						<?php }else{ ?>	
 							<a class="btn btn-danger"  disabled  >
-								<i class="fa fa-remove"></i> Remove</a>	
+								<i class="glyphicon glyphicon-remove"></i> Remove</a>	
 						<?php } ?>
 						
-						<?php if($row['StatusId']==3 AND ($s_userGroupCode==1)){ ?>
-							<a class="btn btn-danger" name="btn_row_delete"  data-Id="<?=$row['Id'];?>" > 
-								<i class="fa fa-trash"></i> Delete</a>	
+						<?php if($row['statusCode']=='X' AND ($s_userGroupCode=='admin' OR $s_userGroupCode=='it' OR $s_userGroupCode=='prog')){ ?>
+							<a class="btn btn-danger" name="btn_row_delete"  data-id="<?=$row['id'];?>" > 
+								<i class="glyphicon glyphicon-trash"></i> Delete</a>	
 						<?php } ?>
                     </td>
                 </tr>
                 <?php $c_row+=1; } ?>
             </table>
+			</div>
 				
 			<nav>
 			<ul class="pagination">
@@ -217,8 +217,6 @@ switch($s_userGroupCode){
 				</li>
 			</ul>
 			</nav>
-			
-			</div>
     </div><!-- /.box-body -->
   <div class="box-footer">
       
@@ -254,19 +252,19 @@ $(document).ready(function() {
 	$('a[name=btn_row_setActive]').click(function(){
 		var params = {
 			action: 'setActive',
-			Id: $(this).attr('data-Id'),
-			StatusId: $(this).attr('data-StatusId')			
+			id: $(this).attr('data-id'),
+			statusCode: $(this).attr('data-statusCode')			
 		};
 		$.smkConfirm({text:'Are you sure ?',accept:'Yes', cancel:'Cancel'}, function (e){if(e){
 			$.post({
-				url: '<?=$rootPage;?>Ajax.php',
+				url: '<?=$rootPage;?>_ajax.php',
 				data: params,
 				dataType: 'json'
 			}).done(function (data) {					
-				if (data.status === "success"){ 
+				if (data.success){ 
 					$.smkAlert({
 						text: data.message,
-						type: data.status,
+						type: 'success',
 						position:'top-center'
 					});
 					location.reload();
@@ -274,7 +272,7 @@ $(document).ready(function() {
 					alert(data.message);
 					$.smkAlert({
 						text: data.message,
-						type: data.status
+						type: 'danger'//,
 					//                        position:'top-center'
 					});
 				}
@@ -289,18 +287,18 @@ $(document).ready(function() {
 	$('a[name=btn_row_remove]').click(function(){
 		var params = {
 			action: 'remove',
-			Id: $(this).attr('data-Id')
+			id: $(this).attr('data-id')
 		};
 		$.smkConfirm({text:'Are you sure to Remove ?',accept:'Yes', cancel:'Cancel'}, function (e){if(e){
 			$.post({
-				url: '<?=$rootPage;?>Ajax.php',
+				url: '<?=$rootPage;?>_ajax.php',
 				data: params,
 				dataType: 'json'
 			}).done(function (data) {					
-				if (data.status === "success"){ 
+				if (data.success){ 
 					$.smkAlert({
 						text: data.message,
-						type: data.status,
+						type: 'success',
 						position:'top-center'
 					});
 					location.reload();
@@ -308,7 +306,8 @@ $(document).ready(function() {
 					alert(data.message);
 					$.smkAlert({
 						text: data.message,
-						type: data.status
+						type: 'danger'//,
+					//                        position:'top-center'
 					});
 				}
 			}).error(function (response) {
@@ -322,18 +321,18 @@ $(document).ready(function() {
 	$('a[name=btn_row_delete]').click(function(){
 		var params = {
 			action: 'delete',
-			Id: $(this).attr('data-Id')
+			id: $(this).attr('data-id')
 		};
 		$.smkConfirm({text:'Are you sure to Delete ?',accept:'Yes', cancel:'Cancel'}, function (e){if(e){
 			$.post({
-				url: '<?=$rootPage;?>Ajax.php',
+				url: '<?=$rootPage;?>_ajax.php',
 				data: params,
 				dataType: 'json'
 			}).done(function (data) {					
-				if (data.status === "success"){ 
+				if (data.success){ 
 					$.smkAlert({
 						text: data.message,
-						type: data.status,
+						type: 'success',
 						position:'top-center'
 					});
 					location.reload();
@@ -341,7 +340,8 @@ $(document).ready(function() {
 					alert(data.message);
 					$.smkAlert({
 						text: data.message,
-						type: data.status
+						type: 'danger'//,
+					//                        position:'top-center'
 					});
 				}
 			}).error(function (response) {

@@ -31,10 +31,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <section class="content">
 
 	
-	
-	
-	
-	
 	<div class="box box-primary">
         <div class="box">
             <div class="box-header with-border">

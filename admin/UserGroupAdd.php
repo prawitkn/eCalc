@@ -12,7 +12,7 @@ $rootPage = 'UserGroup';
 
 //Check user roll.
 switch($s_userGroupCode){
-	case 'admin' : 
+	case 1 : 
 		break;
 	default : 
 		header('Location: access_denied.php');
@@ -32,13 +32,13 @@ switch($s_userGroupCode){
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><i class="glyphicon glyphicon-user"></i>
+      <h1><i class="fa fa-users"></i>
        User Group
-        <small>Admin menu</small>
+        <small>User group management</small>
       </h1>
 	  <ol class="breadcrumb">
-        <li><a href="<?=$rootPage;?>.php"><i class="glyphicon glyphicon-list"></i>User Group List</a></li>
-		<li><a href="#"><i class="glyphicon glyphicon-edit"></i>Add new user group</a></li>
+        <li><a href="<?=$rootPage;?>.php"><i class="fa fa-list"></i>User Group List</a></li>
+		<li><a href="#"><i class="fa fa-edit"></i>Add new user group</a></li>
       </ol>
     </section>
 
@@ -48,7 +48,8 @@ switch($s_userGroupCode){
       <!-- Your Page Content Here -->
     <div class="box box-primary">
         <div class="box-header with-border">
-		<h3 class="box-title">Add new user group</h3>
+		<label class="box-tittle" style="font-size: 20px;"><i class="fa fa-edit"></i> Add New User group</label>
+
 		
         <div class="box-tools pull-right">
           <!-- Buttons, labels, and many other things can be placed here! -->
@@ -79,14 +80,14 @@ switch($s_userGroupCode){
 				<!--/.row-->   
 				
 				<div class="row col-md-12">                
-					<button id="btnSubmit" type="submit" class="btn btn-default">Submit</button>
+					<button id="btnSubmit" type="submit" class="btn btn-defalut">Submit</button>
 				</div>
 				<!--/.row--> 
 			</form>	
 			<!--form1-->
 				
-            </div>
-			<!--.body-->    
+        </div>
+		<!--.body-->    
   <div class="box-footer">  
     <!--The footer of the box -->
 	
@@ -152,7 +153,8 @@ $(document).ready(function() {
 						text: data.message,
 						type: data.status,
 						position:'top-center'
-					});
+					});					
+					setTimeout(function(){history.back();}, 1000);
 				}else{
 					$.smkAlert({
 						text: data.message,
@@ -160,8 +162,6 @@ $(document).ready(function() {
 						position:'top-center'
 					});
 				}
-				$('#form1')[0].reset();
-				$("#code").focus(); 
 			})
 			.error(function (response) {
 				  alert(response.responseText);

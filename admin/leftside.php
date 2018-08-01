@@ -38,7 +38,7 @@
 		
 		<li class="header">Admin Menu</li>		
 		<li><a href="user.php?"><i class="fa fa-list"></i> <span>User</span></a></li>	
-		<li><a href="user_group.php?"><i class="fa fa-list"></i> <span>User Group</span></a></li>	
+		<li><a href="UserGroup.php?"><i class="fa fa-list"></i> <span>User Group</span></a></li>	
 		
       </ul>
       <!-- /.sidebar-menu -->

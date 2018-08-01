@@ -33,7 +33,6 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-  <?php  //echo $_COOKIE['SID']; ?>
     <p class="login-box-msg">Sign in to start your session</p>
     <form id="form1" action="login_go.php" method="post" novalidate>
       <div class="form-group has-feedback">

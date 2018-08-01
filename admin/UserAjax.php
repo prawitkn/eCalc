@@ -1,7 +1,7 @@
 <?php
     include 'session.php';	
 		
-	$tb='cr_user_group';
+	$tb='cr_user';
 	
 	if(!isset($_POST['action'])){		
 		header('Content-Type: application/json');
@@ -10,26 +10,57 @@
 		switch($_POST['action']){
 			case 'add' :				
 				try{					
-					$code = $_POST['code'];
-					$name = $_POST['name'];
+					$userName = $_POST['userName'];
+					$userPassword = $_POST['userPassword'];
+					
+					$userFullname = $_POST['userFullname'];					
+					$userPin = $_POST['userPin'];
+					$userEmail = $_POST['userEmail'];
+					$userTel = $_POST['userTel'];
+					$userGroupCode = $_POST['userGroupCode'];
+					$userDeptCode = $_POST['userDeptCode'];
 					
 					// Check duplication?
-					$sql = "SELECT Id FROM `".$tb."` WHERE Code=:code OR Name=:name LIMIT 1 ";
+					$sql = "SELECT * FROM `".$tb."` WHERE userName=:userName LIMIT 1 ";
 					$stmt = $pdo->prepare($sql);	
-					$stmt->bindParam(':code', $code);
-					$stmt->bindParam(':name', $name);
+					$stmt->bindParam(':userName', $userName);
 					$stmt->execute();
 					if ($stmt->rowCount() == 1){
 					  header('Content-Type: application/json');
 						$errors = "Error on Data Insertion. Please try new username. ";
 						echo json_encode(array('status' => 'warning', 'message' => $errors));
-					}else{ 						
-						$sql = "INSERT INTO `".$tb."` (`Code`, `Name`, `StatusId`, `CreateTime`, `CreateUserId`)
-						 VALUES (:code,:name,1,NOW(),:s_userId)";
+					}else{ 			
+						
+						$salt = "QAzzArVA38rTSm8ctnvrGyDT3ZDVPV88";						
+						// Encript Password
+						$hash_userPassword = hash_hmac('sha256', $userPassword, $salt);
+						// Encript PIN
+						$hash_userPin = hash_hmac('sha256', $userPin, $salt);
+						
+						$new_picture_name="";
+						 // Upload Picture
+						if (is_uploaded_file($_FILES['inputFile']['tmp_name'])){
+							$new_picture_name = 'user_'.uniqid().".".pathinfo(basename($_FILES['inputFile']['name']), PATHINFO_EXTENSION);
+							$path_upload = "dist/img/".$new_picture_name;
+							move_uploaded_file($_FILES['inputFile']['tmp_name'], $path_upload);        
+						}
+
+						$sql = "INSERT INTO ".$tb." (`userName`, `userPassword`, `userPin`, `userFullname`
+						, `userEmail`, `userTel`, `userPicture`, `userGroupCode`,  `userDeptCode`, `statusCode`,CreateTime, CreateUserId)"
+						. " VALUES (:userName, :userPassword, :userPin, :userFullname
+						, :userEmail, :userTel, :userPicture, :userGroupCode, :userDeptCode,1,NOW(),:CreateUserId)";
+						 
 						$stmt = $pdo->prepare($sql);	
-						$stmt->bindParam(':code', $code);
-						$stmt->bindParam(':name', $name);
-						$stmt->bindParam(':s_userId', $s_userId);
+						$stmt->bindParam(':userName', $userName);
+						$stmt->bindParam(':userPassword', $hash_userPassword);
+						$stmt->bindParam(':userPin', $hash_userPin);
+						$stmt->bindParam(':userFullname', $userFullname);
+						$stmt->bindParam(':userEmail', $userEmail);
+						$stmt->bindParam(':userTel', $userTel);
+						$stmt->bindParam(':userPicture', $new_picture_name);
+						$stmt->bindParam(':userGroupCode', $userGroupCode);
+						$stmt->bindParam(':userDeptCode', $userDeptCode);
+						$stmt->bindParam(':CreateUserId', $s_userId);
 						if ($stmt->execute()) {
 							header('Content-Type: application/json');
 							echo json_encode(array('status' => 'success', 'message' => 'Data Inserted Complete.'));
@@ -38,7 +69,7 @@
 							$errors = "Error on Data Insertion. Please try new username. ";
 							echo json_encode(array('status' => 'danger', 'message' => $errors));
 						}
-					}
+					}						
 				}catch(Exception $e){
 					header('Content-Type: application/json');
 				  $errors = "Error : " . $e->getMessage();
