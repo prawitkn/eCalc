@@ -5,7 +5,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
 	  <span class="logo-mini"><img src="../asset/img/ak-logo2.png" class="img-circle" width=45px; height=45px; alt=""></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>AK</b> Evaluation</span>
+      <span class="logo-lg"><b>DAG</b> Calculate Retire</span>
     </a>
 
     <!-- Header Navbar -->

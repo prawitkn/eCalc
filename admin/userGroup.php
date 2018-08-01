@@ -6,11 +6,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 <?php include 'head.php'; 
-$rootPage = 'userGroup';
-$tb = 'wh_user_group';
+$rootPage = 'UserGroup';
+$tb = 'cr_user_group';
+
 //Check user roll.
 switch($s_userGroupCode){
-	case 'it' : case 'admin' :
+	case 'admin' :
 		break;
 	default : 
 		header('Location: access_denied.php');
@@ -34,8 +35,8 @@ switch($s_userGroupCode){
     <!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1><i class="glyphicon glyphicon-user"></i>
-       User Group
-        <small>User Group management</small>
+       User Group List
+        <small>User group management</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="<?=$rootPage;?>.php"><i class="glyphicon glyphicon-list"></i>User Group List</a></li>
@@ -48,8 +49,7 @@ switch($s_userGroupCode){
 <!-- To allow only admin to access the content -->      
     <div class="box box-primary">
         <div class="box-header with-border">
-		<label class="box-title">User Group List</label>
-			<a href="<?=$rootPage;?>_add.php?id=" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Add User Group</a>
+			<a href="<?=$rootPage;?>Add.php?id=" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Add User Group</a>
 		
 		
         <div class="box-tools pull-right">
@@ -63,7 +63,7 @@ switch($s_userGroupCode){
 				$search_word="";
                 $sql = "
 				SELECT COUNT(*) AS countTotal 
-				FROM `wh_user_group` hdr  ";
+				FROM `cr_user_group` hdr  ";
 				if(isset($_GET['search_word']) and isset($_GET['search_word'])){
 					$search_word=$_GET['search_word'];
 					$sql .= "and (hdr.name like '%".$_GET['search_word']."%' ) ";
@@ -85,33 +85,38 @@ switch($s_userGroupCode){
         </div><!-- /.box-tools -->
         </div><!-- /.box-header -->
         <div class="box-body">
-			<div class="row">
-				<div class="col-md-6">					
-					<form id="form1" action="<?=$rootPage;?>.php" method="get" class="form" novalidate>
-						<div class="form-group">
-							<label for="search_word">User Group search key word.</label>
-							<div class="input-group">
-								<input id="search_word" type="text" class="form-control" name="search_word" data-smk-msg="Require userFullname."required>
-								<span class="input-group-addon">
-									<span class="glyphicon glyphicon-search"></span>
-								</span>
-							</div>
-						</div>						
-						<input type="submit" class="btn btn-default" value="ค้นหา">
-					</form>
-				</div>  
-				<!--/.col-md-->
-			</div>
-			<!--/.row-->
+				<form id="form1" action="<?=$rootPage;?>.php" method="get" class="form form-inline" novalidate>
+				
+					<div class="row">
+							<div class="col-md-3">					
+								<label for="search_word">search key word.</label>
+								<input id="search_word" type="text" name="search_word" class="form-control" data-smk-msg="Require userFullname."required>
+								
+								
+							</div>  
+							<!--/.col-md-->
+							
+							<div class="col-md-1">
+								<label for="submit">&nbsp;</label>
+								<input type="submit" name="submit" class="btn btn-default" value="ค้นหา">
+							</div>  
+							<!--/.col-md-->
+					</div>
+					<!--/.row-->
+			
+			
+				</form>
+				<!--/.form1-->
+			
            <?php
 				$sql = "
-				SELECT hdr.`id`, hdr.`code`, hdr.`name`, hdr.`statusCode`
-				, hdr.`createTime`, hdr.`createById`, hdr.`updateTime`, hdr.`updateById`, hdr.`deleteTime`, hdr.`deleteById`
-				, uc.userFullname as createByName 
-				, uu.userFullname as updateByName 
-				FROM `wh_user_group` hdr 
-				LEFT JOIN `wh_user` uc on uc.userID=hdr.deleteById 
-				LEFT JOIN `wh_user` uu on uu.userID=hdr.updateById 
+				SELECT hdr.`Id`, hdr.`Code`, hdr.`Name`, hdr.`StatusId`
+				, hdr.`CreateTime`, hdr.`CreateUserId`, hdr.`UpdateTime`, hdr.`UpdateUserId`
+				, uc.userFullname as CreateUserName 
+				, uu.userFullname as UpdateUserName 
+				FROM `cr_user_group` hdr 
+				LEFT JOIN `cr_user` uc on uc.userId=hdr.CreateUserId 
+				LEFT JOIN `cr_user` uu on uu.userId=hdr.UpdateUserId 
 				WHERE 1=1 ";
 				if(isset($_GET['search_word']) and isset($_GET['search_word'])){
 					$search_word=$_GET['search_word'];
@@ -125,16 +130,16 @@ switch($s_userGroupCode){
 				$stmt->execute();	
                 
            ?> 
-            
-            <table class="table table-striped">
-                <tr>
+            <div class="row col-md-12 table-responsive">
+            <table class="table table-hover">
+                <thead><tr style="background-color: #00ffdd">
 					<th>No.</th>
                     <th>ID</th>
 					<th>Code</th>
 					<th>Name</th>
                     <th>Status</th>
                     <th>#</th>
-                </tr>
+                </tr></thead>
                 <?php $c_row=($start+1); while ($row = $stmt->fetch()) { 
 						?>
                 <tr>
@@ -142,24 +147,24 @@ switch($s_userGroupCode){
                          <?= $c_row; ?>
                     </td>
                     <td>
-                         <?= $row['id']; ?>
+                         <?= $row['Id']; ?>
                     </td>					
                     <td>
-                         <?= $row['code']; ?>
+                         <?= $row['Code']; ?>
                     </td>
                     <td>
-                         <?= $row['name']; ?>
+                         <?= $row['Name']; ?>
                     </td>
                     <td>
 						 <?php
-						 switch($row['statusCode']){ 	
-							case 'A' :
-								echo '<a class="btn btn-success" name="btn_row_setActive" data-statusCode="I" data-id="'.$row['id'].'" >Active</a>';
+						 switch($row['StatusId']){ 	
+							case 1 :
+								echo '<a class="btn btn-success" name="btn_row_setActive" data-statusId="2" data-Id="'.$row['Id'].'" >Active</a>';
 								break;
-							case 'I' :
-								echo '<a class="btn btn-default" name="btn_row_setActive" data-statusCode="A" data-id="'.$row['id'].'" >Inactive</a>';
+							case 2 :
+								echo '<a class="btn btn-default" name="btn_row_setActive" data-statusId="1" data-Id="'.$row['Id'].'" >Inactive</a>';
 								break;
-							case 'X' : 
+							case 3 : 
 								echo '<label style="color: red;" >Removed</label>';
 								break;
 							default :	
@@ -169,31 +174,30 @@ switch($s_userGroupCode){
                     </td>					
                     <td>
 						
-						<?php if($row['statusCode']=='A'){ ?>
-							<a class="btn btn-primary" name="btn_row_edit" href="<?=$rootPage;?>_edit.php?act=edit&id=<?= $row['id']; ?>" >
+						<?php if($row['StatusId']==1){ ?>
+							<a class="btn btn-primary" name="btn_row_edit" href="<?=$rootPage;?>Edit.php?act=edit&Id=<?= $row['Id']; ?>" >
 								<i class="glyphicon glyphicon-edit"></i> Edit</a>	
 						<?php }else{ ?>	
 							<a class="btn btn-primary"  disabled  > 
 								<i class="glyphicon glyphicon-edit"></i> Edit</a>	
 						<?php } ?>
 						
-						<?php if($row['statusCode']=='I'){ ?>
-							<a class="btn btn-danger" name="btn_row_remove"  data-id="<?=$row['id'];?>" > 
+						<?php if($row['StatusId']==2){ ?>
+							<a class="btn btn-danger" name="btn_row_remove"  data-Id="<?=$row['Id'];?>" > 
 								<i class="glyphicon glyphicon-remove"></i> Remove</a>	
 						<?php }else{ ?>	
 							<a class="btn btn-danger"  disabled  >
 								<i class="glyphicon glyphicon-remove"></i> Remove</a>	
 						<?php } ?>
 						
-						<?php if($row['statusCode']=='X' AND ($s_userGroupCode=='admin' OR $s_userGroupCode=='it' OR $s_userGroupCode=='prog')){ ?>
-							<a class="btn btn-danger" name="btn_row_delete"  data-id="<?=$row['id'];?>" > 
+						<?php if($row['StatusId']==3 AND ($s_userGroupCode==1)){ ?>
+							<a class="btn btn-danger" name="btn_row_delete"  data-Id="<?=$row['Id'];?>" > 
 								<i class="glyphicon glyphicon-trash"></i> Delete</a>	
 						<?php } ?>
                     </td>
                 </tr>
                 <?php $c_row+=1; } ?>
             </table>
-			
 				
 			<nav>
 			<ul class="pagination">
@@ -210,6 +214,8 @@ switch($s_userGroupCode){
 				</li>
 			</ul>
 			</nav>
+			
+			</div>
     </div><!-- /.box-body -->
   <div class="box-footer">
       
@@ -245,19 +251,19 @@ $(document).ready(function() {
 	$('a[name=btn_row_setActive]').click(function(){
 		var params = {
 			action: 'setActive',
-			id: $(this).attr('data-id'),
-			statusCode: $(this).attr('data-statusCode')			
+			Id: $(this).attr('data-Id'),
+			StatusId: $(this).attr('data-StatusId')			
 		};
 		$.smkConfirm({text:'Are you sure ?',accept:'Yes', cancel:'Cancel'}, function (e){if(e){
 			$.post({
-				url: '<?=$rootPage;?>_ajax.php',
+				url: '<?=$rootPage;?>Ajax.php',
 				data: params,
 				dataType: 'json'
 			}).done(function (data) {					
-				if (data.success){ 
+				if (data.status === "success"){ 
 					$.smkAlert({
 						text: data.message,
-						type: 'success',
+						type: data.status,
 						position:'top-center'
 					});
 					location.reload();
@@ -265,7 +271,7 @@ $(document).ready(function() {
 					alert(data.message);
 					$.smkAlert({
 						text: data.message,
-						type: 'danger'//,
+						type: data.status
 					//                        position:'top-center'
 					});
 				}
@@ -284,14 +290,14 @@ $(document).ready(function() {
 		};
 		$.smkConfirm({text:'Are you sure to Remove ?',accept:'Yes', cancel:'Cancel'}, function (e){if(e){
 			$.post({
-				url: '<?=$rootPage;?>_ajax.php',
+				url: '<?=$rootPage;?>Ajax.php',
 				data: params,
 				dataType: 'json'
 			}).done(function (data) {					
-				if (data.success){ 
+				if (data.status === "success"){ 
 					$.smkAlert({
 						text: data.message,
-						type: 'success',
+						type: data.status,
 						position:'top-center'
 					});
 					location.reload();
@@ -299,8 +305,7 @@ $(document).ready(function() {
 					alert(data.message);
 					$.smkAlert({
 						text: data.message,
-						type: 'danger'//,
-					//                        position:'top-center'
+						type: data.status
 					});
 				}
 			}).error(function (response) {
@@ -314,18 +319,18 @@ $(document).ready(function() {
 	$('a[name=btn_row_delete]').click(function(){
 		var params = {
 			action: 'delete',
-			id: $(this).attr('data-id')
+			Id: $(this).attr('data-Id')
 		};
 		$.smkConfirm({text:'Are you sure to Delete ?',accept:'Yes', cancel:'Cancel'}, function (e){if(e){
 			$.post({
-				url: '<?=$rootPage;?>_ajax.php',
+				url: '<?=$rootPage;?>Ajax.php',
 				data: params,
 				dataType: 'json'
 			}).done(function (data) {					
-				if (data.success){ 
-					$.smkAlert({
+				if (data.status){ 
+					$.smkAlert({ 
 						text: data.message,
-						type: 'success',
+						type: data.status,
 						position:'top-center'
 					});
 					location.reload();
@@ -333,7 +338,7 @@ $(document).ready(function() {
 					alert(data.message);
 					$.smkAlert({
 						text: data.message,
-						type: 'danger'//,
+						type: data.status
 					//                        position:'top-center'
 					});
 				}

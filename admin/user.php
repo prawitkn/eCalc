@@ -9,7 +9,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 $rootPage = 'user';
 //Check user roll.
 switch($s_userGroupCode){
-	case 'admin' : case 'it' : 
+	case 'admin' : 
 		break;
 	default : 
 		header('Location: access_denied.php');
@@ -55,15 +55,15 @@ switch($s_userGroupCode){
           <!-- Buttons, labels, and many other things can be placed here! -->
           <!-- Here is a label for example -->
           <?php
-                //$sql_user = "SELECT COUNT(*) AS COUNTUSER FROM wh_user";
+                //$sql_user = "SELECT COUNT(*) AS COUNTUSER FROM cr_user";
                // $result_user = mysqli_query($link, $sql_user);
                // $count_user = mysqli_fetch_assoc($result_user);
 				
 				$search_word="";
                 $sql = "
 				SELECT COUNT(*) AS countTotal 
-				FROM `wh_user` hdr 
-				LEFT JOIN wh_user_group ug on ug.code=hdr.userGroupCode  ";
+				FROM `cr_user` hdr 
+				LEFT JOIN cr_user_group ug on ug.code=hdr.userGroupCode  ";
 				if(isset($_GET['search_word']) and isset($_GET['search_word'])){
 					$search_word=$_GET['search_word'];
 					$sql .= "and (hdr.userFullname like '%".$_GET['search_word']."%' ) ";
@@ -107,8 +107,8 @@ switch($s_userGroupCode){
 				SELECT hdr.`userID` as id, hdr.`userName`, hdr.`userPassword`, hdr.`userFullname`, hdr.`userGroupCode`
 				, hdr.`userDeptCode`, hdr.`userEmail`, hdr.`userTel`, hdr.`userPicture`, hdr.`statusCode` 
 				, ug.`name` as userGroupName 
-				FROM `wh_user` hdr 
-				LEFT JOIN wh_user_group ug on ug.code=hdr.userGroupCode  
+				FROM `cr_user` hdr 
+				LEFT JOIN cr_user_group ug on ug.code=hdr.userGroupCode  
 				WHERE 1=1 ";
 				if(isset($_GET['search_word']) and isset($_GET['search_word'])){
 					$search_word=$_GET['search_word'];

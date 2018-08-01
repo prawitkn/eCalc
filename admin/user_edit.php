@@ -9,7 +9,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html>
 <?php include 'head.php'; 
 $rootPage = 'user';
-$tb = 'wh_user';
+$tb = 'cr_user';
 
 //Check user roll.
 switch($s_userGroupCode){
@@ -25,7 +25,7 @@ $sql = "SELECT hdr.`userID` as id, hdr.`userName`, hdr.`userPassword`, hdr.`user
 , hdr.`userDeptCode`, hdr.`userEmail`, hdr.`userTel`, hdr.`userPicture`, hdr.`statusCode` , hdr.`loginStatus` 
 , ug.`name` as userGroupName 
 FROM `".$tb."` hdr 
-LEFT JOIN wh_user_group ug on ug.code=hdr.userGroupCode  
+LEFT JOIN cr_user_group ug on ug.code=hdr.userGroupCode  
 WHERE 1=1
 AND hdr.userID=:id 
 ";
@@ -111,7 +111,7 @@ $row = $stmt->fetch();
 							<select id="userGroupCode" name="userGroupCode" class="form-control"  data-smk-msg="Require User Group" required>
 								<option value=""> -- Select -- </option>
 								<?php
-								$sql = "SELECT `id`, `code`, `name`, `statusCode`  FROM `wh_user_group` WHERE statusCode='A' ";							
+								$sql = "SELECT `id`, `code`, `name`, `statusCode`  FROM `cr_user_group` WHERE statusCode='A' ";							
 								$stmt = $pdo->prepare($sql);		
 								$stmt->execute();
 								while($rOption = $stmt->fetch()){
@@ -122,24 +122,7 @@ $row = $stmt->fetch();
 								}
 								?>
 							</select>
-						</div>		
-						<div class="form-group">
-							<label for="userDeptCode">User Dept.</label>
-							<select id="userDeptCode" name="userDeptCode" class="form-control"  data-smk-msg="Require User Group" >
-								<option value=""> -- Select -- </option>
-								<?php
-								$sql = "SELECT `id`, `code`, `name`, `statusCode`  FROM `wh_user_dept` WHERE statusCode='A' ";							
-								$stmt = $pdo->prepare($sql);		
-								$stmt->execute();
-								while($rOption = $stmt->fetch()){
-									$selected = ($rOption['code']==$row['userDeptCode']?' selected ':'');									
-									echo '<option value="'.$rOption['code'].'" '
-										.$selected
-										 .'>'.$rOption['code'].' : ['.$rOption['name'].']</option>';
-								}
-								?>
-							</select>
-						</div>	
+						</div>
                         <!--<div class="form-group">
 							<img src="dist/img/<?=$row['userPicture'];?>" style="width: 100px; height:100px; border: 1px solid black;" /><br/>
                             <label for="userPicture">Choose personal picture file input.</label>

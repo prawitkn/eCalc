@@ -9,10 +9,10 @@
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Theme style -->
+  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+   Ionicons -->
+  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+   Theme style -->
    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="plugins/iCheck/square/blue.css">
@@ -71,31 +71,31 @@
  
 <script src="bootstrap/js/smoke.min.js"></script>
 <script>
-    $(document).ready(function() {
-        
-        $("#userName").focus();
-        
-        $('#form1').on("submit",function(e) {
-     
-           if($('#form1').smkValidate()) {
-    //alert("Ok validate");      
-                $.post("login_go.php", $("#form1").serialize() )
-                        .done(function(data) { //alert(data);
-                            if (data.status === "danger") {
-    // alert("danger message");            
-                                $.smkAlert({text: data.message, type: data.status});
-                                $('#form1').smkClear();
-                                $("#userName").focus();
-                             }else{
-                                 $(location).attr('href', 'index.php');
-                             }
-                        });         
-                e.preventDefault();               
-           }            
-            e.preventDefault();
-        });
-        
-    });
+$(document).ready(function() {	
+	
+	$('#form1').on("submit",function(e) {
+ 
+	   if($('#form1').smkValidate()) {
+//alert("Ok validate");   
+			$.post("login_go.php", $("#form1").serialize() )
+					.done(function(data) { alert(data);
+						if (data.status === "danger") {
+// alert("danger message");            
+							$.smkAlert({text: data.message, type: data.status});
+							//$('#form1').smkClear();
+							$("#userName").focus();
+							alert($('#userPassword'));
+						 }else{
+							 $(location).attr('href', 'index.php');
+						 }
+					});         
+			e.preventDefault();               
+	   }            
+		e.preventDefault();
+	});
+	
+	$("#userName").focus();	
+});
 </script>
 </body>
 </html>

@@ -8,11 +8,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 <?php include 'head.php'; 
-$rootPage = 'userGroup';
+$rootPage = 'UserGroup';
 
 //Check user roll.
 switch($s_userGroupCode){
-	case 'it' : 
+	case 'admin' : 
 		break;
 	default : 
 		header('Location: access_denied.php');
@@ -34,11 +34,11 @@ switch($s_userGroupCode){
     <section class="content-header">
       <h1><i class="glyphicon glyphicon-user"></i>
        User Group
-        <small>User Group management</small>
+        <small>Admin menu</small>
       </h1>
 	  <ol class="breadcrumb">
         <li><a href="<?=$rootPage;?>.php"><i class="glyphicon glyphicon-list"></i>User Group List</a></li>
-		<li><a href="#"><i class="glyphicon glyphicon-edit"></i>User Group</a></li>
+		<li><a href="#"><i class="glyphicon glyphicon-edit"></i>Add new user group</a></li>
       </ol>
     </section>
 
@@ -48,44 +48,48 @@ switch($s_userGroupCode){
       <!-- Your Page Content Here -->
     <div class="box box-primary">
         <div class="box-header with-border">
-        <h3 class="box-title">Add User Group</h3>
+		<h3 class="box-title">Add new user group</h3>
+		
         <div class="box-tools pull-right">
           <!-- Buttons, labels, and many other things can be placed here! -->
           <!-- Here is a label for example -->
          
         </div><!-- /.box-tools -->
         </div><!-- /.box-header -->
-        <div class="box-body">            
-            <div class="row">                
-                    <form id="form1" action="userGroup_add_ajax.php" method="post" class="form" validate >
-					<input type="hidden" name="action" value="add" />		
-					<div class="col-md-6">					
-                        <div class="form-group">
-                            <label for="code">User Group Code</label>
-                            <input id="code" type="text" class="form-control" name="code" data-smk-msg="Require user group code."required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="name">User Group Name</label>
-                            <input id="name" type="text" class="form-control" name="name" data-smk-msg="Require uer group name" required>
-                        </div>
-						
-						<button id="btn1" type="submit" class="btn btn-default">Submit</button>
+        <div class="box-body"> 
+			<form id="form1" action="<?=$rootPage;?>Ajax.php" method="post" class="form" validate >
+				<div class="row"> 
+					<input type="hidden" name="action" value="add" />
+					
+					<div class="col-md-3">					
+						<div class="form-group">
+							<label for="code">User Group Code</label>
+							<input id="code" type="text" class="form-control" name="code" data-smk-msg="Require user group code."required>
+						</div>
 					</div>
 					<!--/.col-md-->
-					<div class="col-md-6">
-						
-                        
+					<div class="col-md-3">                        
+						<div class="form-group">
+							<label for="name">User Group Name</label>
+							<input id="name" type="text" class="form-control" name="name" data-smk-msg="Require uer group name" required>
+						</div>
 					</div>
 					<!--/.col-md-->
-                    </form>
-                </div>
-                <!--/.row-->       
+				</div>
+				<!--/.row-->   
+				
+				<div class="row col-md-12">                
+					<button id="btnSubmit" type="submit" class="btn btn-default">Submit</button>
+				</div>
+				<!--/.row--> 
+			</form>	
+			<!--form1-->
+				
             </div>
 			<!--.body-->    
-  <div class="box-footer">
-  
+  <div class="box-footer">  
     <!--The footer of the box -->
+	
   </div><!-- box-footer -->
 </div><!-- /.box -->
 
@@ -136,23 +140,23 @@ $(document).ready(function() {
 	$('#form1').on("submit", function(e) {
 		if ($('#form1').smkValidate()) {
 			$.ajax({
-			url: '<?=$rootPage;?>_ajax.php',
+			url: '<?=$rootPage;?>Ajax.php',
 			type: 'POST',
 			data: new FormData( this ),
 			processData: false,
 			contentType: false,
 			dataType: 'json'
-			}).done(function (data) {
-				if (data.success){  
+			}).done(function (data) { 
+				if (data.status === "success"){  
 					$.smkAlert({
 						text: data.message,
-						type: 'success',
+						type: data.status,
 						position:'top-center'
 					});
 				}else{
 					$.smkAlert({
 						text: data.message,
-						type: 'danger',
+						type: data.status,
 						position:'top-center'
 					});
 				}

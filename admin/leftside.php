@@ -19,8 +19,7 @@
       <ul class="sidebar-menu ">
 		
 			
-		<li class="header">HR Menu</li>		
-		<li><a href="topic.php?position_group_id=1&topic_group_id=1"><i class="fa fa-list"></i> <span>Topics</span></a></li>	
+		
 		
 		<li class="header">Menu</li>		
 		<li><a href="person_info.php?id=1"><i class="fa fa-list"></i> <span>Info</span></a></li>	
@@ -36,6 +35,10 @@
 		<li><a href="#"><i class="fa fa-list"></i> <span>Division Positions</span></a></li>	
 		<li><a href="person.php"><i class="fa fa-list"></i> <span>Persons</span></a></li>	
 		<li><a href="terms.php"><i class="fa fa-list"></i> <span>Terms</span></a></li>	
+		
+		<li class="header">Admin Menu</li>		
+		<li><a href="user.php?"><i class="fa fa-list"></i> <span>User</span></a></li>	
+		<li><a href="user_group.php?"><i class="fa fa-list"></i> <span>User Group</span></a></li>	
 		
       </ul>
       <!-- /.sidebar-menu -->

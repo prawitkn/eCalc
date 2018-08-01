@@ -9,11 +9,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html>
 <?php include 'head.php'; 
 $rootPage = 'user';
-$tb = 'wh_user';
+$tb = 'cr_user';
 
 //Check user roll.
 switch($s_userGroupCode){
-	case 'admin' : case 'it' : 
+	case 'admin' : 
 		break;
 	default : 
 		header('Location: access_denied.php');
@@ -95,7 +95,7 @@ switch($s_userGroupCode){
 							<select id="userGroupCode" name="userGroupCode" class="form-control"  data-smk-msg="Require User Group" required>
 								<option value=""> -- Select -- </option>
 								<?php
-								$sql = "SELECT `id`, `code`, `name`, `statusCode`  FROM `wh_user_group` WHERE statusCode='A' ";							
+								$sql = "SELECT `id`, `code`, `name`, `statusCode`  FROM `cr_user_group` WHERE statusCode='A' ";							
 								$stmt = $pdo->prepare($sql);		
 								$stmt->execute();
 								while($row = $stmt->fetch()){
@@ -104,27 +104,7 @@ switch($s_userGroupCode){
 								}
 								?>
 							</select>
-						</div>	
-						<div class="form-group">
-							<label for="userDeptCode">User Dept.</label>
-							<select id="userDeptCode" name="userDeptCode" class="form-control"  data-smk-msg="Require User Group" >
-								<option value=""> -- Select -- </option>
-								<?php
-								$sql = "SELECT `id`, `code`, `name`, `statusCode`  FROM `wh_user_dept` WHERE statusCode='A' ";							
-								$stmt = $pdo->prepare($sql);		
-								$stmt->execute();
-								while($row = $stmt->fetch()){
-									echo '<option value="'.$row['code'].'" 
-										 >'.$row['code'].' : ['.$row['name'].']</option>';
-								}
-								?>
-							</select>
-						</div>							
-                        <!--<div class="form-group">
-                            <label for="userPicture">Choose personal picture file input.</label>
-                            <input type="file" id="userPicture" name="userPicture">
-                            <p class="help-block">Please select picture file .jpg, .png, .gif</p>
-                        </div>-->
+						</div>		
 						<div class="form-group">
 							<input type="hidden" name="curPhoto" id="curPhoto" value="<?=$row['photo'];?>" />
 							<input type="file" name="inputFile" accept="image/*" multiple  onchange="showMyImage(this)" /> <br/>
