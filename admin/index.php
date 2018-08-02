@@ -56,7 +56,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- /.box-header -->
             <div class="box-body">
               <div class="row">                
-                    <form id="form1" method="post" class="form" enctype="multipart/form-data" validate>
+                    <form id="form1" action="Preview.php" method="post" class="form" validate>
 					<input type="hidden" name="action" value="edit" />
 	<div class="col-md-12">				
 	<ul class="nav nav-pills">
@@ -74,7 +74,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		</div>
 		<!--/.col-md-3-->	
 		<div class="col-md-2">			
-				<input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" >
+				<input type="text" id="DateBegin" name="DateBegin" class="form-control datepicker" >
 		</div>
 		<!--/.col-md-2-->
 		<div class="col-md-3">
@@ -82,7 +82,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		</div>
 		<!--/.col-md-3-->
 		<div class="col-md-2">			
-			<input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" >
+			<input type="text" id="DateEnd" name="DateEnd" class="form-control datepicker" >
 		</div>
 		<!--/.col-md-2-->
 	  </div>
@@ -101,11 +101,76 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	
 	
     <div id="menu1" class="tab-pane fade">
-     
+        <br/>
+        <div class="row col-md-12 table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ลำดับที่</th>
+                        <th>รายการ</th>
+                        <th>วันเริ่มต้น</th>
+                        <th>วันสิ้นสุด</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1.</td>
+                        <td><input type="hidden" name="Ex" class="form-control" ></td>
+                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
+                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
+                    </tr>
+                    <tr>
+                        <td>2.</td>
+                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control" ></td>
+                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
+                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
+                    </tr>
+                    <tr>
+                        <td>3.</td>
+                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control" ></td>
+                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
+                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
+                    </tr>                    
+                    <tr>
+                        <td>4.</td>
+                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control" ></td>
+                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
+                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
+                    </tr>                    
+                    <tr>
+                        <td>5.</td>
+                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control" ></td>
+                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
+                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
+                    </tr>    
+                </tbody>
+            </table>
+        </div>
+        <!--/.row col-md-12 table-responsive-->
     </div>
+    <!--/.menu1-->
 	
     <div id="menu2" class="tab-pane fade">
-      
+        <br/>
+        <div class="row col-md-12">
+            <div class="col-md-2">
+                <label for="workDayBegin">พ.ส.ร. รวม</label>          
+            </div>
+            <!--/.col-md-3-->   
+            <div class="col-md-2">          
+                    <input type="text" id="yearRowNo" name="yearRowNo" class="form-control" >
+            </div>
+            <!--/.col-md-2-->
+            <div class="col-md-2">
+                <label for="workDayBegin">เงินเดือนสุดท้าย</label>          
+            </div>
+            <!--/.col-md-3-->
+            <div class="col-md-2">          
+                <input type="text" id="yearRowNo" name="yearRowNo" class="form-control" >
+            </div>
+            <!--/.col-md-2-->
+        </div>
+        <!--/.row col-md-12 table-responsive-->
     </div>
 		
   </div>
