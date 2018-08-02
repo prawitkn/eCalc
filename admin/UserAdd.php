@@ -110,8 +110,8 @@ switch($s_userGroupCode){
 							</select>
 						</div>
 						<div class="form-group col-md-6">
-							<label for="userGroupDept">User Department</label>
-							<select id="userGroupDept" name="userGroupDept" class="form-control"  data-smk-msg="Require User Department" required>
+							<label for="userDeptCode">User Department</label>
+							<select id="userDeptCode" name="userDeptCode" class="form-control"  data-smk-msg="Require User Department" required>
 								<option value="0"> -- All -- </option>
 							</select>
 						</div>							

@@ -14,8 +14,8 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="plugins/ionicons-2.0.0/ionicons.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-  <!--<link rel="stylesheet" href="plugins/fontAwesome/font-awesome.min.css">-->
+  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="plugins/fontAwesome/font-awesome.min.css">-->
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter

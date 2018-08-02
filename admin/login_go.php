@@ -1,6 +1,6 @@
 <?php
 include_once 'ConfigApp.php'; 
-include <?=APP_CORE_PATH;?>'db/db.php';
+include 'db/db.php';
 
 $userName = $_POST['userName'];
 $userPassword = $_POST['userPassword'];

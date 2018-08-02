@@ -20,10 +20,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        e-Calculate Retire
+		คำนวณอายุราชการ เบี้ยหวัด บำเหน็จ บำนาญ สบ.ทหาร
       </h1>
       <ol class="breadcrumb">
-        <li class="active"><a href="index.php"><i class="fa fa-dashboard"></i> Main Page</a></li>
+        <li class="active"><a href="index.php"><i class="fa fa-dashboard"></i> หน้าแรก</a></li>
       </ol>
     </section>
 
@@ -34,7 +34,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<div class="box box-primary">
         <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Evaluation Summary</h3>
+              <h3 class="box-title">คำนวณอายุราชการ เบี้ยหวัด บำเหน็จ บำนาญ สบ.ทหาร</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -55,114 +55,79 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <div class="row"> 
-                <div class="col-md-6">
-                  <div id="container" style="width:100%; height:400px;">
-				  
-					</div>
-				  <!-- /.container -->
+              <div class="row">                
+                    <form id="form1" method="post" class="form" enctype="multipart/form-data" validate>
+					<input type="hidden" name="action" value="edit" />
+	<div class="col-md-12">				
+	<ul class="nav nav-pills">
+		<li class="active"><a data-toggle="pill" href="#home">1. เวลารับราชการ <i class="fa fa-caret-right"></i></a></li>
+		<li><a data-toggle="pill" href="#menu1">2. วันทวีคูณ <i class="fa fa-caret-right"></i></a></li>
+		<li><a data-toggle="pill" href="#menu2">3. เงินเดือน/เงินเพิ่มฯ <i class="fa fa-caret-right"></i></a></li>		
+	</ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+	  <br/>
+	  <div class="row col-md-12">
+		<div class="col-md-3">
+			<label for="workDayBegin">วันที่บรรจุข้าราชการครั้งแรก</label>			
+		</div>
+		<!--/.col-md-3-->	
+		<div class="col-md-2">			
+				<input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" >
+		</div>
+		<!--/.col-md-2-->
+		<div class="col-md-3">
+			<label for="workDayBegin">วันที่บรรจุข้าราชการครั้งแรก</label>			
+		</div>
+		<!--/.col-md-3-->
+		<div class="col-md-2">			
+			<input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" >
+		</div>
+		<!--/.col-md-2-->
+	  </div>
+		<!--/.row col-md-12-->
+		
+		<div class="row col-md-12 pull-right">
+			<button ></button>
+			<a data-toggle="pill" href="#menu1"> ต่อไป <i class="fa fa-caret-right"></i></a>
+		</div>
+		<!--/.row col-md-12-->
+		
+    </div>
+	<!--/.tab-pane fade in-->
+	
+	
+	
+	
+    <div id="menu1" class="tab-pane fade">
+     
+    </div>
+	
+    <div id="menu2" class="tab-pane fade">
+      
+    </div>
+		
+  </div>
+  
+  <div class="col-md-3">
+  </div>
+  <div class="col-md-7">
+	
+  </div>
+  <div class="col-md-2">
+  
+	
+	<a href="<?=$rootPage;?>_view.php?id=<?=$_GET['id'];?>" class="btn btn-primary">Submit</a>
+	</div>
+  </div><!--col-md-12-->
+
+                    </form>
                 </div>
-                <!-- /.col -->				
-				
-                <div class="col-md-6">
-					<div id="container2" style="width:100%; height:400px;">
-				  
-					</div>
-                  <!-- /.container -->
-                </div>
-                <!-- /.col -->
-              </div>
-              <!-- /.row -->
+                <!--/.row-->  
             </div> 
 			<!-- /.box-body -->
 			
-			
-			<div class="box box-danger">
-        <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Pending Evaluation List</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-wrench"></i></button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                  </ul>
-                </div>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-			   <?php
-					$sql = "SELECT a.*
-							, dp.name as position_name 
-							FROM persons a						
-							LEFT JOIN division_positions dp ON dp.id=a.position_id 
-							WHERE 1 
-							ORDER BY a.id asc
-							LIMIT 3
-							"; 
-					$result = mysqli_query($link, $sql);                
-			   ?>             
-				<table class="table table-striped">
-					<tr>
-						<th>No.</th>					
-						<th>Image</th>
-						<th>Code</th>
-						<th>Fullname</th>
-						<th>Evaluate 1</th>
-						<th>Evaluate 2</th>					
-						<th>Evaluate 3</th>						
-						<th>#</th>
-					</tr>
-					<?php $c_row=(0+1); while ($row = mysqli_fetch_assoc($result)) { 
-						$img = 'dist/img/avatar5.png';
-					?>
-					<tr>
-						<td>
-							 <?= $c_row; ?>
-						</td>					
-						<td>
-							 <img class="img-circle" src="<?=$img;?>" alt="Persons Image" width="50" />
-						</td>	
-						<td>
-							 <?= $row['code']; ?>
-						</td>	
-						<td>
-							 <?= $row['fullname']; ?>
-						</td> 
-						<td>
-							 <li class="fa fa-check-circle"></li>
-						</td> 
-						<td>
-							 <li class="fa fa-check-circle"></li>
-						</td> 
-						<td>
-							 <li class="fa fa-circle"></li>
-						</td>
-						<td>
-							<a class="btn btn-default" name="btn_row_edit" href="evaluate_view_all.php?id=<?= $row['id']; ?>" >
-									<i class="fa fa-check-search"></i> View</a>	
-						
-						</td>
-					</tr>
-					<?php $c_row +=1; } ?>
-				</table>
-				
-				
-            </div> 
-			<!-- /.box-body -->
-	</div><!-- /.box -->
-		</div><!-- /.box -->
-
 
 	
 
@@ -303,3 +268,23 @@ Highcharts.chart('container2', {
     }]
 });
 </script>
+
+
+<link href="bootstrap-datepicker-custom-thai/dist/css/bootstrap-datepicker.css" rel="stylesheet" />
+<script src="bootstrap-datepicker-custom-thai/dist/js/bootstrap-datepicker-custom.js"></script>
+<script src="bootstrap-datepicker-custom-thai/dist/locales/bootstrap-datepicker.th.min.js" charset="UTF-8"></script>
+  
+<script>
+	$(document).ready(function () {
+		$('.datepicker').datepicker({
+			daysOfWeekHighlighted: "0,6",
+			autoclose: true,
+			format: 'dd/mm/yyyy',
+			todayBtn: true,
+			language: 'th',             //เปลี่ยน label ต่างของ ปฏิทิน ให้เป็น ภาษาไทย   (ต้องใช้ไฟล์ bootstrap-datepicker.th.min.js นี้ด้วย)
+			thaiyear: true              //Set เป็นปี พ.ศ.
+		});  //กำหนดเป็นวันปัจุบัน
+	});
+</script>
+	
+	

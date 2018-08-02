@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Login AK-WMS | Log in</title>
+  <title>ระบบคำนวณอายุ เบี้ยหวัด บำเหน็จ บำนาญ สบ.ทหาร</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -29,11 +29,11 @@
 <body class="hold-transition login-page" style="background-color: #85e085; ">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>DAG</b> Calculate Retire</a>
+    <a href="../../index2.html"><b>DAG</b> ระบบคำนวณอายุ เบี้ยหวัด บำเหน็จ บำนาญ สบ.ทหาร</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
+    <p class="login-box-msg">ลงชื่อเข้าใช้</p>
     <form id="form1" action="login_go.php" method="post" novalidate>
       <div class="form-group has-feedback">
         <input type="text" id="userName" name="userName"  class="form-control" placeholder="User Name" data-smk-msg="Require name." required>
@@ -45,12 +45,12 @@
       </div>
       <div class="row">
         <div class="col-xs-6">
-            <a href="../" class="btn btn-default btn-block btn-flat">Return</a>
+            <!--<a href="../" class="btn btn-default btn-block btn-flat">Return</a>-->
         </div>
         
         
         <div class="col-xs-6">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+          <button type="submit" class="btn btn-primary btn-block btn-flat">ลงชื่อเข้าใช้</button>
         </div>
         <!-- /.col -->
       </div>
