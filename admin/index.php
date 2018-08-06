@@ -34,7 +34,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<div class="box box-primary">
         <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">คำนวณอายุราชการ เบี้ยหวัด บำเหน็จ บำนาญ สบ.ทหาร</h3>
+              <h3 class="box-title">คำนวณอายุราชการ เบี้ยหวัด บำเหน็จ บำนาญ สบ.ทหาร : <?=$s_userId; ?></h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -68,32 +68,38 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
 	  <br/>
+       <div class="row col-md-12">
+        <div class="col-md-3">
+            <label for="DateBegin">วันเดือนปีเกิด</label>         
+        </div>
+        <!--/.col-md-3-->   
+        <div class="col-md-2">          
+                <input type="text" id="DateBegin" name="DateBegin" class="form-control" value="22/09/2528" >
+        </div>
+        <!--/.col-md-2-->
+      </div>
+        <!--/.row col-md-12-->  
+
+
 	  <div class="row col-md-12">
 		<div class="col-md-3">
-			<label for="workDayBegin">วันที่บรรจุข้าราชการครั้งแรก</label>			
+			<label for="DateBegin">วันที่บรรจุข้าราชการครั้งแรก</label>			
 		</div>
 		<!--/.col-md-3-->	
 		<div class="col-md-2">			
-				<input type="text" id="DateBegin" name="DateBegin" class="form-control datepicker" >
+				<input type="text" id="DateBegin" name="DateBegin" class="form-control datepicker" value="10/11/2557" >
 		</div>
 		<!--/.col-md-2-->
 		<div class="col-md-3">
-			<label for="workDayBegin">วันที่บรรจุข้าราชการครั้งแรก</label>			
+			<label for="DateEnd">วันที่รับราชการสุดท้าย</label>			
 		</div>
 		<!--/.col-md-3-->
 		<div class="col-md-2">			
-			<input type="text" id="DateEnd" name="DateEnd" class="form-control datepicker" >
+			<input type="text" id="DateEnd" name="DateEnd" class="form-control datepicker" value="30/09/2590" >
 		</div>
 		<!--/.col-md-2-->
 	  </div>
-		<!--/.row col-md-12-->
-		
-		<div class="row col-md-12 pull-right">
-			<button ></button>
-			<a data-toggle="pill" href="#menu1"> ต่อไป <i class="fa fa-caret-right"></i></a>
-		</div>
-		<!--/.row col-md-12-->
-		
+		<!--/.row col-md-12-->				
     </div>
 	<!--/.tab-pane fade in-->
 	
@@ -114,34 +120,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </thead>
                 <tbody>
                     <tr>
-                        <td>1.</td>
-                        <td><input type="hidden" name="Ex" class="form-control" ></td>
-                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
-                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
+                        <td style="text-align: rihgt;"><input type="hidden" name="ExtraSeqNo[]" value="1" />1.</td>
+                        <td><input type="text" name="ExtraName[]" class="form-control" value="ประกาศกฏอัยการศึก" /></td>
+                        <td><input type="text" name="ExtraDateBegin[]" class="form-control datepicker" value="01/10/2557" ></td>
+                        <td><input type="text" name="ExtraDateEnd[]" class="form-control datepicker" value="30/09/2558" ></td>
                     </tr>
                     <tr>
-                        <td>2.</td>
-                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control" ></td>
-                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
-                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
+                       <td style="text-align: rihgt;"><input type="hidden" name="ExtraSeqNo[]" value="2" />2.</td>
+                        <td><input type="text" name="ExtraName[]" class="form-control" value="ฝสบ." /></td>
+                        <td><input type="text" name="ExtraDateBegin[]" class="form-control datepicker" value="01/04/2559" ></td>
+                        <td><input type="text" name="ExtraDateEnd[]" class="form-control datepicker" value="30/09/2559" ></td>
                     </tr>
                     <tr>
-                        <td>3.</td>
-                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control" ></td>
-                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
-                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
+                       <td style="text-align: rihgt;"><input type="hidden" name="ExtraSeqNo[]" value="3" />3.</td>
+                        <td><input type="text" name="ExtraName[]" class="form-control" /></td>
+                        <td><input type="text" name="ExtraDateBegin[]" class="form-control datepicker" ></td>
+                        <td><input type="text" name="ExtraDateEnd[]" class="form-control datepicker" ></td>
                     </tr>                    
                     <tr>
-                        <td>4.</td>
-                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control" ></td>
-                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
-                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
+                        <td style="text-align: rihgt;"><input type="hidden" name="ExtraSeqNo[]" value="4" />4.</td>
+                        <td><input type="text" name="ExtraName[]" class="form-control" /></td>
+                        <td><input type="text" name="ExtraDateBegin[]" class="form-control datepicker" ></td>
+                        <td><input type="text" name="ExtraDateEnd[]" class="form-control datepicker" ></td>
                     </tr>                    
                     <tr>
-                        <td>5.</td>
-                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control" ></td>
-                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
-                        <td><input type="text" id="yearRowNo" name="yearRowNo" class="form-control datepicker" ></td>
+                        <td style="text-align: rihgt;"><input type="hidden" name="ExtraSeqNo[]" value="5" />5.</td>
+                        <td><input type="text" name="ExtraName[]" class="form-control" /></td>
+                        <td><input type="text" name="ExtraDateBegin[]" class="form-control datepicker" ></td>
+                        <td><input type="text" name="ExtraDateEnd[]" class="form-control datepicker" ></td>
                     </tr>    
                 </tbody>
             </table>
@@ -158,7 +164,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
             <!--/.col-md-3-->   
             <div class="col-md-2">          
-                    <input type="text" id="yearRowNo" name="yearRowNo" class="form-control" >
+                    <input type="text" name="PSR" class="form-control" style="text-align: right;" value="1800" />
             </div>
             <!--/.col-md-2-->
             <div class="col-md-2">
@@ -166,7 +172,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
             <!--/.col-md-3-->
             <div class="col-md-2">          
-                <input type="text" id="yearRowNo" name="yearRowNo" class="form-control" >
+                <input type="text" name="Salary" class="form-control" style="text-align: right;" value="25000" />
             </div>
             <!--/.col-md-2-->
         </div>
@@ -182,8 +188,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </div>
   <div class="col-md-2">
   
-	
-	<a href="<?=$rootPage;?>_view.php?id=<?=$_GET['id'];?>" class="btn btn-primary">Submit</a>
+	 
+    <input type="submit" class="btn btn-defalut" value="คำนวณข้อมูล" />
 	</div>
   </div><!--col-md-12-->
 
